@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
     private float _verticalInput;
     private float _horizontalInput;
     public float speed;
+    public float turnSpeed;
     
     //Ground check and jumping variables
     public Transform groundCheck;
@@ -30,6 +31,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         _playerRb = this.GetComponent<Rigidbody>();
+        health = 100;
     }
 
     // Update is called once per frame
@@ -40,7 +42,7 @@ public class PlayerController : MonoBehaviour
 
         transform.Translate(Vector3.forward * (_verticalInput * speed * Time.deltaTime));
         transform.Translate(Vector3.right * (_horizontalInput * speed * Time.deltaTime));
-
+        
         _isGrounded = Physics.Raycast(transform.position, Vector3.down, 1f);
         
         if (Input.GetKeyDown(KeyCode.Space) && _isGrounded)
