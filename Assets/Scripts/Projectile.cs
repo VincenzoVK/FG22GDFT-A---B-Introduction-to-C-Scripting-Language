@@ -1,24 +1,38 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Collections.LowLevel.Unsafe;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+public class Projectile : MonoBehaviour
 {
 
-    private float speed = 10;
-
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] public float speed = 10;
+    private bool isActive;
+    private CharacterWeapon localCharacterWeapon;
+    
+    
+    
+    public void Initialize(CharacterWeapon characterWeapon)
     {
-        transform.Rotate(new Vector3(90,0,0));
-        this.GetComponent<Rigidbody>().AddForce(transform.forward * speed + transform.up * speed, ForceMode.Impulse);
+        isActive = true;
+        localCharacterWeapon = characterWeapon;
+    }
+
+    private void Update()
+    {
+
+        if (isActive)
+        {
+            transform.Translate((localCharacterWeapon.transform.forward * (speed * Time.deltaTime)));
+        }
+        
     }
     
     private void OnCollisionEnter(Collision collision)
     {
         Destroy(collision.gameObject);
-        Destroy(GetComponent<Rigidbody>());
-        Destroy(this);
+        Destroy(gameObject);
     }
+
 }

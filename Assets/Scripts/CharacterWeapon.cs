@@ -7,13 +7,11 @@ public class CharacterWeapon : MonoBehaviour
     [SerializeField] private GameObject projectilePrefab;
     [SerializeField] private Transform shootingStartPosition;
 
-    private void Update()
+    public void ShootBullet()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            GameObject newProjectile = Instantiate(projectilePrefab);
-            newProjectile.transform.position = shootingStartPosition.position;
-            newProjectile.GetComponent<Projectile>();
-        }
+        GameObject newProjectile = Instantiate(projectilePrefab);
+        newProjectile.transform.position = shootingStartPosition.position;
+        newProjectile.GetComponent<Projectile>().Initialize(this);
+        
     }
 }
