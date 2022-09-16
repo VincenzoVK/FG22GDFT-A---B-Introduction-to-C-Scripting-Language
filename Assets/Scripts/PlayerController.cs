@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Palmmedia.ReportGenerator.Core.Reporting.Builders;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
@@ -21,7 +22,6 @@ public class PlayerController : MonoBehaviour
     public float speed;
 
     //Rotate character variables
-    public float turnSpeed;
 
     //Ground check and jumping variables
     private float _groundDistance;
@@ -59,14 +59,9 @@ public class PlayerController : MonoBehaviour
             
             if (Input.GetKeyDown(KeyCode.Space) && _isGrounded)
             {
-                _playerRb.AddForce(0, jumpforce, 0, ForceMode.Impulse);
+                _playerRb.AddForce(0f, jumpforce, 0f, ForceMode.Impulse);
             }
 
-            if (Input.GetMouseButtonDown(0))
-            {
-                this.GetComponent<CharacterWeapon>().ShootBullet();
-            }
-            
         }
     }
 

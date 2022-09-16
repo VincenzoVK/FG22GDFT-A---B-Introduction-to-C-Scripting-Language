@@ -10,6 +10,7 @@ public class Projectile : MonoBehaviour
     [SerializeField] public float speed = 10;
     private bool isActive;
     private CharacterWeapon localCharacterWeapon;
+    private bool isAPlayer;
     
     
     
@@ -31,8 +32,18 @@ public class Projectile : MonoBehaviour
     
     private void OnCollisionEnter(Collision collision)
     {
+
+        isAPlayer = collision.gameObject.GetComponent<PlayerController>() != null;
+        
         Destroy(collision.gameObject);
         Destroy(gameObject);
+        
+        //If the gameObject you just destroyed is a player, quit the game since it's finished
+        if (isAPlayer)
+        {
+            Application.Quit();
+        }
+        
     }
 
 }
