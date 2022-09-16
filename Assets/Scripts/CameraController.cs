@@ -5,8 +5,13 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
 
-    public GameObject player;
-    public Vector3 offset;
+    [SerializeField] private GameObject[] player;
+    [SerializeField] private Vector3 offsetPlayer1;
+    [SerializeField] private Vector3 offsetPlayer2;
+    [SerializeField] private Vector3 cameraRotationPlayer1;
+    [SerializeField] private Vector3 cameraRotationPlayer2;
+
+    private int playerTurnIndex;
     
     
     // Start is called before the first frame update
@@ -19,9 +24,25 @@ public class CameraController : MonoBehaviour
     void LateUpdate()
     {
 
-        if (player != null)
+        if (player[0].GetComponent<PlayerTurn>().isPlayerTurn())
         {
-            transform.position = player.transform.position - offset;
+            playerTurnIndex = 0;
+        }
+        else
+        {
+            playerTurnIndex = 1;
+        }
+        
+        
+        if (playerTurnIndex == 0 && player != null)
+        {
+            this.transform.eulerAngles = cameraRotationPlayer1;
+            transform.position = player[playerTurnIndex].transform.position - offsetPlayer1;
+        }
+        else if(player != null)
+        {
+            this.transform.eulerAngles = cameraRotationPlayer2;
+            transform.position = player[playerTurnIndex].transform.position - offsetPlayer2;
         }
 
     }

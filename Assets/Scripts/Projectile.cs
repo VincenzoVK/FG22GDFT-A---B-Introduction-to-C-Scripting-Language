@@ -41,6 +41,7 @@ public class Projectile : MonoBehaviour
         //If the gameObject you just destroyed is a player, quit the game since it's finished
         if (isAPlayer)
         {
+            Debug.LogError("Finish the game");
             Application.Quit();
         }
         
