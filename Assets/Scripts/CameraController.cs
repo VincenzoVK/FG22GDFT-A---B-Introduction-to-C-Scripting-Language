@@ -23,28 +23,34 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
-
-        if (player[0].GetComponent<PlayerTurn>().isPlayerTurn())
+        if (player[0] == null || player[1] == null)
         {
-            playerTurnIndex = 0;
+            Application.Quit();
         }
         else
         {
-            playerTurnIndex = 1;
-        }
+            if (player[0].GetComponent<PlayerTurn>().isPlayerTurn())
+            {
+                playerTurnIndex = 0;
+            }
+            else
+            {
+                playerTurnIndex = 1;
+            }
         
         
-        if (playerTurnIndex == 0 && player != null)
-        {
-            this.transform.eulerAngles = cameraRotationPlayer1;
-            transform.position = player[playerTurnIndex].transform.position - offsetPlayer1;
+            if (playerTurnIndex == 0 && player != null)
+            {
+                this.transform.eulerAngles = cameraRotationPlayer1;
+                transform.position = player[playerTurnIndex].transform.position - offsetPlayer1;
+            }
+            else if(player != null)
+            {
+                this.transform.eulerAngles = cameraRotationPlayer2;
+                transform.position = player[playerTurnIndex].transform.position - offsetPlayer2;
+            }
         }
-        else if(player != null)
-        {
-            this.transform.eulerAngles = cameraRotationPlayer2;
-            transform.position = player[playerTurnIndex].transform.position - offsetPlayer2;
-        }
+        
 
     }
-    
 }

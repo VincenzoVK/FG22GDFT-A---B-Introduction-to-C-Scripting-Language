@@ -45,6 +45,7 @@ public class PlayerController : MonoBehaviour
         {
             _horizontalInput = Input.GetAxis("Horizontal");
             _verticalInput = Input.GetAxis("Vertical");
+            
             _isGrounded = Physics.Raycast(transform.position, Vector3.down, 1f);
 
             if (Input.GetAxis("Horizontal") != 0)
