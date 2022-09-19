@@ -11,6 +11,8 @@ public class Projectile : MonoBehaviour
     private bool isActive;
     private CharacterWeapon localCharacterWeapon;
     private bool isAPlayer;
+    private PlayerController temporaryPlayerController;
+    private int _damage = 20;
     
     
     
@@ -33,17 +35,30 @@ public class Projectile : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
 
-        isAPlayer = collision.gameObject.GetComponent<PlayerController>() != null;
-        
-        Destroy(collision.gameObject);
+        temporaryPlayerController = collision.gameObject.GetComponent<PlayerController>();
+        isAPlayer = temporaryPlayerController != null;
         Destroy(gameObject);
         
-        //If the gameObject you just destroyed is a player, quit the game since it's finished
         if (isAPlayer)
         {
-            Application.Quit();
+            if (temporaryPlayerController.health-_damage > 0)
+            {
+                temporaryPlayerController.health -= _damage;
+            }
+            else
+            { 
+                collision.gameObject.SetActive(false);
+                Application.Quit(); 
+            }
+            
         }
-        
+        else if (!collision.gameObject.CompareTag("Ground"))
+        {
+            Destroy(collision.gameObject);
+        }
+
+
+
     }
 
 }

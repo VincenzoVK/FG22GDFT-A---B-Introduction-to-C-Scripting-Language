@@ -29,6 +29,9 @@ public class PlayerController : MonoBehaviour
     private bool _isGrounded;
     private Rigidbody _playerRb;
     public float jumpforce;
+    
+    //Doublejump variables
+    private bool _hasMadeOneJump;
 
 
     // Start is called before the first frame update
@@ -60,7 +63,14 @@ public class PlayerController : MonoBehaviour
             
             if (Input.GetKeyDown(KeyCode.Space) && _isGrounded)
             {
+                _hasMadeOneJump = true;
                 _playerRb.AddForce(0f, jumpforce, 0f, ForceMode.Impulse);
+            }
+
+            if (Input.GetKeyDown(KeyCode.Space) && !_isGrounded && _hasMadeOneJump)
+            {
+                _playerRb.AddForce(transform.forward.x, (float)(jumpforce/(1.5)), transform.forward.z, ForceMode.Impulse);
+                _hasMadeOneJump = false;
             }
 
         }
