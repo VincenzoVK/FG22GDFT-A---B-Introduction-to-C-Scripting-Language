@@ -10,6 +10,10 @@ public class CameraController : MonoBehaviour
     [SerializeField] private Vector3 offsetPlayer2;
     [SerializeField] private Vector3 cameraRotationPlayer1;
     [SerializeField] private Vector3 cameraRotationPlayer2;
+    [SerializeField] float horizontalCameraSpeed;
+    [SerializeField] float verticalCameraSpeed;
+    private float horizontalMouseInput;
+    private float verticalMouseInput;
 
     private int playerTurnIndex;
     

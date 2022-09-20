@@ -10,10 +10,16 @@ public class EnemyAI : MonoBehaviour
     public LayerMask whatIsGround, whatIsPlayer, whatIsBound;
     private int whoImChasing;
     
+    
     //Patrolling
     public Vector3 walkPoint;
     private bool walkPointSet;
     public float walkPointRange;
+
+    [SerializeField] int positiveXRange;
+    [SerializeField] int negativeXRange;
+    [SerializeField] int positiveZRange;
+    [SerializeField] int negativeZRange;
 
     //Attacking
     public float timeBetweenAttacks;
@@ -63,11 +69,13 @@ public class EnemyAI : MonoBehaviour
 
         walkPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
 
-        if (Physics.Raycast(walkPoint, -transform.up, 2f, whatIsGround) && !Physics.Raycast(walkPoint,transform.forward,0f,whatIsBound))
+        Ray walkPointRay = new Ray(walkPoint, Vector3.up);
+        
+        if (Physics.Raycast(walkPoint, -transform.up, 1f, whatIsGround) && !Physics.SphereCast(walkPointRay,200f, 10f,whatIsBound))
         {
             walkPointSet = true;
         }
-
+        
     }
 
     private void ChasePlayer()
@@ -118,6 +126,7 @@ public class EnemyAI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         
         //Check for sight and attack range
         playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);

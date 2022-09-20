@@ -21,7 +21,12 @@ public class PlayerController : MonoBehaviour
     private float _horizontalInput;
     public float speed;
 
-    //Rotate character variables
+    //Rotate character and camera variables
+    [SerializeField] float horizontalCameraSpeed;
+    [SerializeField] float verticalCameraSpeed;
+    private float horizontalMouseInput;
+    private float verticalMouseInput;
+    
 
     //Ground check and jumping variables
     private float _groundDistance;
@@ -48,20 +53,24 @@ public class PlayerController : MonoBehaviour
         {
             _horizontalInput = Input.GetAxis("Horizontal");
             _verticalInput = Input.GetAxis("Vertical");
-            
+            horizontalMouseInput = Input.GetAxis("Mouse X");
+            verticalMouseInput = Input.GetAxis("Mouse Y");
+
             _isGrounded = Physics.Raycast(transform.position, Vector3.down, 1f);
 
-            if (Input.GetAxis("Horizontal") != 0)
+            if (_horizontalInput != 0)
             {
                 transform.Translate(Vector3.right * (_horizontalInput * speed * Time.deltaTime));
             }
             
-            if (Input.GetAxis("Vertical") != 0)
+            if (_verticalInput != 0)
             {
                 transform.Translate(Vector3.forward * (_verticalInput * speed * Time.deltaTime));
             }
             
-            if (Input.GetKeyDown(KeyCode.Space) && _isGrounded)
+            transform.Rotate(0, horizontalCameraSpeed * horizontalMouseInput * Time.deltaTime, 0);
+
+                if (Input.GetKeyDown(KeyCode.Space) && _isGrounded)
             {
                 _hasMadeOneJump = true;
                 _playerRb.AddForce(0f, jumpforce, 0f, ForceMode.Impulse);
