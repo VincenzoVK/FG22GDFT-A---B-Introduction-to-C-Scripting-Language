@@ -15,6 +15,9 @@ public class PlayerController : MonoBehaviour
     //Player statistics
     public int health;
 
+    
+    //Safety variables
+    NavMeshHit hit;
 
     //Movement variables
     private float _verticalInput;
@@ -22,19 +25,16 @@ public class PlayerController : MonoBehaviour
     public float speed;
 
     //Rotate character and camera variables
-    [SerializeField] float horizontalCameraSpeed;
-    [SerializeField] float verticalCameraSpeed;
-    private float horizontalMouseInput;
-    private float verticalMouseInput;
-    
+    [SerializeField] float rotationSpeed;
 
     //Ground check and jumping variables
     private float _groundDistance;
-    private LayerMask _groundMask;
     private bool _isGrounded;
     private Rigidbody _playerRb;
     public float jumpforce;
-    
+    public bool _isSafe;
+    private LayerMask whatIsGround;
+
     //Doublejump variables
     private bool _hasMadeOneJump;
 
@@ -44,20 +44,22 @@ public class PlayerController : MonoBehaviour
     {
         _playerRb = this.GetComponent<Rigidbody>();
         health = 100;
+        _isSafe = !NavMesh.SamplePosition(transform.position, out hit, 1f, NavMesh.AllAreas);
+        whatIsGround = LayerMask.GetMask("whatIsGround");
+
     }
 
     // Update is called once per frame
     void Update()
     {
+        _isSafe = !NavMesh.SamplePosition(transform.position, out hit, 1f, NavMesh.AllAreas);
         if (playerTurn.isPlayerTurn())
         {
             _horizontalInput = Input.GetAxis("Horizontal");
             _verticalInput = Input.GetAxis("Vertical");
-            horizontalMouseInput = Input.GetAxis("Mouse X");
-            verticalMouseInput = Input.GetAxis("Mouse Y");
 
-            _isGrounded = Physics.Raycast(transform.position, Vector3.down, 1f);
-
+            _isGrounded = Physics.Raycast(transform.position, Vector3.down, 1f, whatIsGround);
+            
             if (_horizontalInput != 0)
             {
                 transform.Translate(Vector3.right * (_horizontalInput * speed * Time.deltaTime));
@@ -68,9 +70,17 @@ public class PlayerController : MonoBehaviour
                 transform.Translate(Vector3.forward * (_verticalInput * speed * Time.deltaTime));
             }
             
-            transform.Rotate(0, horizontalCameraSpeed * horizontalMouseInput * Time.deltaTime, 0);
+            if (Input.GetKey(KeyCode.Q))
+            {
+                transform.Rotate(0, -rotationSpeed * Time.deltaTime, 0);
+            }
+            
+            if (Input.GetKey(KeyCode.E))
+            {
+                transform.Rotate(0, rotationSpeed * Time.deltaTime, 0);
+            }
 
-                if (Input.GetKeyDown(KeyCode.Space) && _isGrounded)
+            if (Input.GetKeyDown(KeyCode.Space) && _isGrounded)
             {
                 _hasMadeOneJump = true;
                 _playerRb.AddForce(0f, jumpforce, 0f, ForceMode.Impulse);

@@ -7,19 +7,36 @@ public class CharacterWeapon : MonoBehaviour
     [SerializeField] private PlayerTurn playerTurn;
     [SerializeField] private GameObject projectilePrefab;
     [SerializeField] private Transform shootingStartPosition;
+    private bool alreadyShoot;
+    
+    //Timer for turn
+    [SerializeField] float turnTime = 30f;
 
 
     private void Update()
     {
         bool IsPlayerTurn = playerTurn.isPlayerTurn();
-        if (Input.GetMouseButtonDown(0))
+        if (IsPlayerTurn)
         {
-            if (IsPlayerTurn)
+            if (turnTime > 0)
             {
-                TurnManager.GetInstance().TriggerChangeTurn();
-                ShootBullet();
+                turnTime -= Time.deltaTime;
+            
+                if (Input.GetMouseButtonDown(0) && !alreadyShoot)
+                {
+                    ShootBullet();
+                    alreadyShoot = true;
+                }
             }
+            else
+            {
+                alreadyShoot = false;
+                turnTime = 30f;
+                TurnManager.GetInstance().TriggerChangeTurn();
+            }
+            
         }
+        
     }
     
     public void ShootBullet()
@@ -28,5 +45,6 @@ public class CharacterWeapon : MonoBehaviour
         newProjectile.transform.position = shootingStartPosition.position;
         newProjectile.GetComponent<Projectile>().Initialize(this);
     }
-
+    
+    
 }

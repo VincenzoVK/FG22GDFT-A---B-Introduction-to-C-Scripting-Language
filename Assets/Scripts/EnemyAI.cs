@@ -7,7 +7,7 @@ public class EnemyAI : MonoBehaviour
 {
     public NavMeshAgent agent;
     public GameObject[] player;
-    public LayerMask whatIsGround, whatIsPlayer, whatIsBound;
+    public LayerMask whatIsPlayer;
     private int whoImChasing;
     
     
@@ -15,16 +15,12 @@ public class EnemyAI : MonoBehaviour
     public Vector3 walkPoint;
     private bool walkPointSet;
     public float walkPointRange;
-
-    [SerializeField] int positiveXRange;
-    [SerializeField] int negativeXRange;
-    [SerializeField] int positiveZRange;
-    [SerializeField] int negativeZRange;
-
+    NavMeshHit hit;
+    
+    
     //Attacking
     public float timeBetweenAttacks;
     private bool alreadyAttacked;
-    public GameObject projectile;
 
     //States
     public float sightRange, attackRange;
@@ -36,11 +32,11 @@ public class EnemyAI : MonoBehaviour
         player[0] = GameObject.Find("Player1");
         player[1] = GameObject.Find("Player2");
         agent = GetComponent<NavMeshAgent>();
+        whatIsPlayer = LayerMask.GetMask("whatIsPlayer");
     }
 
     private void Patrolling()
     {
-
         if (!walkPointSet)
         {
             SearchWalkPoint();
@@ -69,9 +65,7 @@ public class EnemyAI : MonoBehaviour
 
         walkPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
 
-        Ray walkPointRay = new Ray(walkPoint, Vector3.up);
-        
-        if (Physics.Raycast(walkPoint, -transform.up, 1f, whatIsGround) && !Physics.SphereCast(walkPointRay,200f, 10f,whatIsBound))
+        if (NavMesh.SamplePosition(walkPoint, out hit, 1f, NavMesh.AllAreas))
         {
             walkPointSet = true;
         }
@@ -80,12 +74,12 @@ public class EnemyAI : MonoBehaviour
 
     private void ChasePlayer()
     {
-        if (Vector3.Distance(player[0].transform.position, this.transform.position) < Vector3.Distance(player[1].transform.position, this.transform.position) && player[0].activeSelf)
+        if (Vector3.Distance(player[0].transform.position, this.transform.position) < Vector3.Distance(player[1].transform.position, this.transform.position) && player[0].activeSelf && !player[0].GetComponent<PlayerController>()._isSafe)
         {
             agent.SetDestination(player[0].transform.position);
             whoImChasing = 0;
         }
-        else if(player[1].activeSelf)
+        else if(player[1].activeSelf && !player[1].GetComponent<PlayerController>()._isSafe)
         {
             agent.SetDestination(player[1].transform.position);
             whoImChasing = 1;
@@ -100,7 +94,7 @@ public class EnemyAI : MonoBehaviour
         agent.SetDestination(transform.position);
         transform.LookAt(player[whoImChasing].transform);
 
-        if (!alreadyAttacked)
+        if (!alreadyAttacked && !player[whoImChasing].GetComponent<PlayerController>()._isSafe)
         {
             //Insert code for attacking
             this.GetComponent<CharacterWeapon>().ShootBullet();
@@ -127,22 +121,22 @@ public class EnemyAI : MonoBehaviour
     void Update()
     {
 
-        
         //Check for sight and attack range
         playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
         playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
 
-        if (player[0].activeSelf || player[1].activeSelf)
+        if (player[0].activeSelf && player[1].activeSelf)
         {
-            if (!playerInAttackRange && !playerInSightRange)
+
+            if ((!playerInAttackRange && !playerInSightRange) || player[whoImChasing].GetComponent<PlayerController>()._isSafe)
             {
                 Patrolling();
             }
-            else if (playerInSightRange && !playerInAttackRange)
+            else if (playerInSightRange && !playerInAttackRange && !player[whoImChasing].GetComponent<PlayerController>()._isSafe)
             {
                 ChasePlayer();
             }
-            else if (playerInAttackRange && playerInSightRange)
+            else if (playerInAttackRange && playerInSightRange && !player[whoImChasing].GetComponent<PlayerController>()._isSafe)
             {
                 AttackPlayer();
             }
@@ -152,7 +146,10 @@ public class EnemyAI : MonoBehaviour
             Application.Quit();
         }
         
-        
+        if (agent.isStopped)
+        {
+            Patrolling();
+        }
         
     }
 }
