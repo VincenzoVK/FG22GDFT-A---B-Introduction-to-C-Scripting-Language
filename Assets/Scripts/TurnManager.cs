@@ -10,6 +10,7 @@ public class TurnManager : MonoBehaviour
     [SerializeField] private PlayerTurn playerOne;
     [SerializeField] private PlayerTurn playerTwo;
     [SerializeField] private float timeBetweenTurns;
+    [SerializeField] private GameObject cameraManager;
 
     private int currentPlayerIndex;
     private bool waitingForNextTurn;
@@ -37,7 +38,8 @@ public class TurnManager : MonoBehaviour
                 turnDelay = 0;
                 waitingForNextTurn = false;
                 ChangeTurn();
-            }
+                cameraManager.GetComponent<CinemachineCameraController>()
+                    .changeCamera();            }
         }
     }
 

@@ -37,6 +37,10 @@ public class PlayerController : MonoBehaviour
 
     //Doublejump variables
     private bool _hasMadeOneJump;
+    
+    //Pickup variables
+    public bool hasHigherJumpPickup;
+    private float normalJumpforce;
 
 
     // Start is called before the first frame update
@@ -46,6 +50,7 @@ public class PlayerController : MonoBehaviour
         health = 100;
         _isSafe = !NavMesh.SamplePosition(transform.position, out hit, 1f, NavMesh.AllAreas);
         whatIsGround = LayerMask.GetMask("whatIsGround");
+        normalJumpforce = jumpforce;
 
     }
 
@@ -83,7 +88,13 @@ public class PlayerController : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Space) && _isGrounded)
             {
                 _hasMadeOneJump = true;
+                if (hasHigherJumpPickup)
+                {
+                    jumpforce *= 2;
+                }
                 _playerRb.AddForce(0f, jumpforce, 0f, ForceMode.Impulse);
+                hasHigherJumpPickup = false;
+                jumpforce = normalJumpforce;
             }
 
             if (Input.GetKeyDown(KeyCode.Space) && !_isGrounded && _hasMadeOneJump)
@@ -91,9 +102,6 @@ public class PlayerController : MonoBehaviour
                 _playerRb.AddForce(transform.forward.x, (float)(jumpforce/(1.5)), transform.forward.z, ForceMode.Impulse);
                 _hasMadeOneJump = false;
             }
-
         }
     }
-
-
 }

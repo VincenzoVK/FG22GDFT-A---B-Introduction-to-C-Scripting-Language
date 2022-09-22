@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class JumpHigher : MonoBehaviour
+public class DoubleDamage : MonoBehaviour
 {
 
     private bool doOnce;
@@ -24,7 +24,7 @@ public class JumpHigher : MonoBehaviour
         if (collision.gameObject.CompareTag("Player") && doOnce)
         {
             doOnce = false;
-            collision.gameObject.GetComponent<PlayerController>().hasHigherJumpPickup = true;
+            collision.gameObject.GetComponent<CharacterWeapon>().hasDoubleDamage = true;
             Destroy(this);
             Destroy(gameObject);    
         }

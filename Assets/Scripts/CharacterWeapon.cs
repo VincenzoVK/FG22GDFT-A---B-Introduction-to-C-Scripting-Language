@@ -8,6 +8,8 @@ public class CharacterWeapon : MonoBehaviour
     [SerializeField] private GameObject projectilePrefab;
     [SerializeField] private Transform shootingStartPosition;
     private bool alreadyShoot;
+    public bool hasDoubleDamage;
+
     
     //Timer for turn
     [SerializeField] float turnTime = 30f;
@@ -42,6 +44,11 @@ public class CharacterWeapon : MonoBehaviour
     public void ShootBullet()
     {
         GameObject newProjectile = Instantiate(projectilePrefab);
+        if (hasDoubleDamage)
+        {
+            newProjectile.GetComponent<Projectile>()._damage *= 2;
+            hasDoubleDamage = false;
+        }
         newProjectile.transform.position = shootingStartPosition.position;
         newProjectile.GetComponent<Projectile>().Initialize(this);
     }

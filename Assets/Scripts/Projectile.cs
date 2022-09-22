@@ -12,7 +12,7 @@ public class Projectile : MonoBehaviour
     private CharacterWeapon localCharacterWeapon;
     private bool isAPlayer;
     private PlayerController temporaryPlayerController;
-    private int _damage = 20;
+    public int _damage = 20;
     
     
     

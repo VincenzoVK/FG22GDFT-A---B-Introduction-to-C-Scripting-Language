@@ -8,7 +8,7 @@ public class EnemyAI : MonoBehaviour
     public NavMeshAgent agent;
     public GameObject[] player;
     public LayerMask whatIsPlayer;
-    private int whoImChasing;
+    public int whoImChasing;
     
     
     //Patrolling
@@ -73,19 +73,21 @@ public class EnemyAI : MonoBehaviour
     }
 
     private void ChasePlayer()
+    { 
+        agent.SetDestination(player[whoImChasing].transform.position);
+    }
+
+    private void WhoImChasing()
     {
-        if (Vector3.Distance(player[0].transform.position, this.transform.position) < Vector3.Distance(player[1].transform.position, this.transform.position) && player[0].activeSelf && !player[0].GetComponent<PlayerController>()._isSafe)
+        if (Vector3.Distance(player[0].transform.position, this.transform.position) < Vector3.Distance(player[1].transform.position, this.transform.position) && !player[0].GetComponent<PlayerController>()._isSafe)
         {
-            agent.SetDestination(player[0].transform.position);
             whoImChasing = 0;
         }
-        else if(player[1].activeSelf && !player[1].GetComponent<PlayerController>()._isSafe)
+        else if(!player[1].GetComponent<PlayerController>()._isSafe)
         {
-            agent.SetDestination(player[1].transform.position);
             whoImChasing = 1;
         }
         
-
     }
 
     private void AttackPlayer()
@@ -127,7 +129,7 @@ public class EnemyAI : MonoBehaviour
 
         if (player[0].activeSelf && player[1].activeSelf)
         {
-
+            WhoImChasing();
             if ((!playerInAttackRange && !playerInSightRange) || player[whoImChasing].GetComponent<PlayerController>()._isSafe)
             {
                 Patrolling();

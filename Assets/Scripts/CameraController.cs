@@ -59,7 +59,8 @@ public class CameraController : MonoBehaviour
                 playerTurnIndex = 0;
                 if (player != null)
                 {
-                    transform.position = player[playerTurnIndex].transform.position - transform.forward * distanceFromTarget;
+                    transform.position = player[playerTurnIndex].transform.position -
+                                         transform.forward * distanceFromTarget;
                 }
             }
             else if(player != null)
