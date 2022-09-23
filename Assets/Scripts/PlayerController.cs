@@ -23,6 +23,7 @@ public class PlayerController : MonoBehaviour
     private float _verticalInput;
     private float _horizontalInput;
     public float speed;
+    private float normalSpeed;
 
     //Rotate character and camera variables
     [SerializeField] float rotationSpeed;
@@ -41,6 +42,9 @@ public class PlayerController : MonoBehaviour
     //Pickup variables
     public bool hasHigherJumpPickup;
     private float normalJumpforce;
+    private float speedTimer = 5;
+    private float resetSpeedTimer = 5;
+    private bool hasMoreSpeed;
 
 
     // Start is called before the first frame update
@@ -51,6 +55,7 @@ public class PlayerController : MonoBehaviour
         _isSafe = !NavMesh.SamplePosition(transform.position, out hit, 1f, NavMesh.AllAreas);
         whatIsGround = LayerMask.GetMask("whatIsGround");
         normalJumpforce = jumpforce;
+        normalSpeed = speed;
 
     }
 
@@ -58,6 +63,17 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         _isSafe = !NavMesh.SamplePosition(transform.position, out hit, 1f, NavMesh.AllAreas);
+        
+        if (speedTimer > 0 && hasMoreSpeed)
+        {
+            speedTimer -= Time.deltaTime;
+        }
+        else if(speedTimer <= 0)
+        {
+            speedTimer = resetSpeedTimer;
+            ResetVelocity();
+        }
+        
         if (playerTurn.isPlayerTurn())
         {
             _horizontalInput = Input.GetAxis("Horizontal");
@@ -103,5 +119,17 @@ public class PlayerController : MonoBehaviour
                 _hasMadeOneJump = false;
             }
         }
+    }
+
+    public void ModifyVelocity(float addedVelocity)
+    {
+        speed += addedVelocity;
+        hasMoreSpeed = true;
+    }
+
+    public void ResetVelocity()
+    {
+        speed = normalSpeed;
+        hasMoreSpeed = false;
     }
 }

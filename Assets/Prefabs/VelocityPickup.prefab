@@ -13,9 +13,10 @@ GameObject:
   - component: {fileID: 924943561716650706}
   - component: {fileID: 5926231268938019157}
   - component: {fileID: -8751591280015759435}
-  - component: {fileID: 8520652610127933428}
+  - component: {fileID: -5156214930220541558}
+  - component: {fileID: -673792148771100586}
   m_Layer: 0
-  m_Name: DoubleDamage
+  m_Name: VelocityPickup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -64,7 +65,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: bbc0c64c2706379429ae7c15282a766b, type: 2}
+  - {fileID: 2100000, guid: a116b0c1740f0b440aa355606f823d6a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -115,7 +116,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 94
   m_CollisionDetection: 0
---- !u!114 &8520652610127933428
+--- !u!114 &-5156214930220541558
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -124,7 +125,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 5604983799692392598}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6fbbe076855002d49bc93d7ddfbba690, type: 3}
+  m_Script: {fileID: 11500000, guid: b6c3802ecd3590240a20e5150c35e6ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpForce: 20
+--- !u!114 &-673792148771100586
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5604983799692392598}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f0d432c4fec675469465b5ac43aaedf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  addedVelocity: 8

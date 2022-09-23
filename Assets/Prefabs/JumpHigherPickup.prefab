@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -8751591280015759435}
   - component: {fileID: -5156214930220541558}
   m_Layer: 0
-  m_Name: JumpHigher
+  m_Name: JumpHigherPickup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
