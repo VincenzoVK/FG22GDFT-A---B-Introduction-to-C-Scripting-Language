@@ -1,6 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Timers;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CharacterWeapon : MonoBehaviour
 {
@@ -10,10 +14,17 @@ public class CharacterWeapon : MonoBehaviour
     private bool alreadyShoot;
     public bool hasDoubleDamage;
 
-    
-    //Timer for turn
-    [SerializeField] float turnTime = 30f;
 
+    //Timer for turn
+    private float turnTime;
+    [SerializeField] private float defaulTurnTime;
+    //UI
+    [SerializeField] private TMP_Text countdownText;
+
+    private void Start()
+    {
+        turnTime = defaulTurnTime;
+    }
 
     private void Update()
     {
@@ -33,12 +44,15 @@ public class CharacterWeapon : MonoBehaviour
             else
             {
                 alreadyShoot = false;
-                turnTime = 30f;
+                turnTime = defaulTurnTime;
                 TurnManager.GetInstance().TriggerChangeTurn();
             }
             
         }
         
+        //Update timer on UI
+        countdownText.text = "Turn timer: " + turnTime.ToString().Substring(0,2);
+
     }
     
     public void ShootBullet()
