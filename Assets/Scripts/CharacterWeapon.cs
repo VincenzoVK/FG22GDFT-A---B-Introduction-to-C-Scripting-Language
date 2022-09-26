@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Timers;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,14 +15,12 @@ public class CharacterWeapon : MonoBehaviour
 
 
     //Timer for turn
-    private float turnTime;
-    [SerializeField] private float defaulTurnTime;
-    //UI
-    [SerializeField] private TMP_Text countdownText;
+    public float turnTime;
+    [SerializeField] private float defaultTurnTime;
 
     private void Start()
     {
-        turnTime = defaulTurnTime;
+        turnTime = defaultTurnTime;
     }
 
     private void Update()
@@ -44,15 +41,11 @@ public class CharacterWeapon : MonoBehaviour
             else
             {
                 alreadyShoot = false;
-                turnTime = defaulTurnTime;
+                turnTime = defaultTurnTime;
                 TurnManager.GetInstance().TriggerChangeTurn();
             }
             
         }
-        
-        //Update timer on UI
-        countdownText.text = "Turn timer: " + turnTime.ToString().Substring(0,2);
-
     }
     
     public void ShootBullet()
@@ -66,6 +59,10 @@ public class CharacterWeapon : MonoBehaviour
         newProjectile.transform.position = shootingStartPosition.position;
         newProjectile.GetComponent<Projectile>().Initialize(this);
     }
-    
+
+    public bool IsPlayerTurn()
+    {
+        return playerTurn.isPlayerTurn();
+    }
     
 }

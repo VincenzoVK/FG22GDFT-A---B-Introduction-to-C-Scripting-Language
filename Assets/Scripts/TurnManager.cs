@@ -39,7 +39,9 @@ public class TurnManager : MonoBehaviour
                 waitingForNextTurn = false;
                 ChangeTurn();
                 cameraManager.GetComponent<CinemachineCameraController>()
-                    .changeCamera();            }
+                    .changeCamera();
+                
+            }
         }
     }
 
