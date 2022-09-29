@@ -106,7 +106,7 @@ NavMeshSettings:
   m_BuildSettings:
     serializedVersion: 2
     agentTypeID: 0
-    agentRadius: 1
+    agentRadius: 2
     agentHeight: 5
     agentSlope: 0
     agentClimb: 0
@@ -114,7 +114,7 @@ NavMeshSettings:
     maxJumpAcrossDistance: 0
     minRegionArea: 2
     manualCellSize: 0
-    cellSize: 0.33333334
+    cellSize: 0.6666667
     manualTileSize: 0
     tileSize: 256
     accuratePlacement: 0
@@ -1083,7 +1083,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 298862214}
-  m_LocalRotation: {x: 0.3269923, y: -1e-45, z: -0, w: 0.945027}
+  m_LocalRotation: {x: 0.3269923, y: -1e-45, z: 1e-45, w: 0.945027}
   m_LocalPosition: {x: -2.948924, y: -23.682999, z: 26.800003}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -6540,7 +6540,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1446405655}
-  m_LocalRotation: {x: -0, y: 0.945027, z: -0.3269923, w: -1e-45}
+  m_LocalRotation: {x: 1e-45, y: 0.945027, z: -0.3269923, w: 3e-45}
   m_LocalPosition: {x: 28.707077, y: -23.49, z: 60.628613}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -6605,7 +6605,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1450537216}
-  m_LocalRotation: {x: -0, y: 0.945027, z: -0.3269923, w: -1e-45}
+  m_LocalRotation: {x: 1e-45, y: 0.945027, z: -0.3269923, w: 3e-45}
   m_LocalPosition: {x: 28.707077, y: -23.49, z: 60.628613}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -9614,7 +9614,7 @@ LightingSettings:
   m_PrefabAsset: {fileID: 0}
   m_Name: 
   serializedVersion: 4
-  m_GIWorkflowMode: 0
+  m_GIWorkflowMode: 1
   m_EnableBakedLightmaps: 1
   m_EnableRealtimeLightmaps: 0
   m_RealtimeEnvironmentLighting: 1
@@ -10174,6 +10174,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: AIPlayer
       objectReference: {fileID: 0}
+    - target: {fileID: 60802067740632121, guid: d92e9791d3b090245a33fb949f7fbedb, type: 3}
+      propertyPath: m_Height
+      value: 2.8134427
+      objectReference: {fileID: 0}
+    - target: {fileID: 60802067740632121, guid: d92e9791d3b090245a33fb949f7fbedb, type: 3}
+      propertyPath: m_Radius
+      value: 0.58208406
+      objectReference: {fileID: 0}
+    - target: {fileID: 60802067740632121, guid: d92e9791d3b090245a33fb949f7fbedb, type: 3}
+      propertyPath: m_Center.x
+      value: 0.03603226
+      objectReference: {fileID: 0}
+    - target: {fileID: 60802067740632121, guid: d92e9791d3b090245a33fb949f7fbedb, type: 3}
+      propertyPath: m_Center.y
+      value: -0.15579054
+      objectReference: {fileID: 0}
+    - target: {fileID: 60802067740632121, guid: d92e9791d3b090245a33fb949f7fbedb, type: 3}
+      propertyPath: m_Center.z
+      value: 0.018788815
+      objectReference: {fileID: 0}
     - target: {fileID: 60802067740632125, guid: d92e9791d3b090245a33fb949f7fbedb, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -10223,12 +10243,20 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 60802067740632127, guid: d92e9791d3b090245a33fb949f7fbedb, type: 3}
+      propertyPath: m_Mass
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 60802067740632127, guid: d92e9791d3b090245a33fb949f7fbedb, type: 3}
       propertyPath: m_AngularDrag
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1032529825236178007, guid: d92e9791d3b090245a33fb949f7fbedb, type: 3}
       propertyPath: m_Speed
-      value: 15
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 1032529825236178007, guid: d92e9791d3b090245a33fb949f7fbedb, type: 3}
+      propertyPath: m_Radius
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1032529825236178007, guid: d92e9791d3b090245a33fb949f7fbedb, type: 3}
       propertyPath: m_AutoBraking
@@ -10236,11 +10264,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1032529825236178007, guid: d92e9791d3b090245a33fb949f7fbedb, type: 3}
       propertyPath: m_Acceleration
-      value: 60
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 1032529825236178007, guid: d92e9791d3b090245a33fb949f7fbedb, type: 3}
       propertyPath: m_AngularSpeed
-      value: 20
+      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 1032529825236178007, guid: d92e9791d3b090245a33fb949f7fbedb, type: 3}
       propertyPath: m_WalkableMask
@@ -10248,7 +10276,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1032529825236178014, guid: d92e9791d3b090245a33fb949f7fbedb, type: 3}
       propertyPath: sightRange
-      value: 15
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 1032529825236178014, guid: d92e9791d3b090245a33fb949f7fbedb, type: 3}
       propertyPath: attackRange
@@ -10273,6 +10301,10 @@ PrefabInstance:
     - target: {fileID: 1032529825236178014, guid: d92e9791d3b090245a33fb949f7fbedb, type: 3}
       propertyPath: walkPointRange
       value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 1032529825236178014, guid: d92e9791d3b090245a33fb949f7fbedb, type: 3}
+      propertyPath: timeBetweenAttacks
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1032529825236178014, guid: d92e9791d3b090245a33fb949f7fbedb, type: 3}
       propertyPath: walkPointRangeBotX

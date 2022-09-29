@@ -65,11 +65,11 @@ public class EnemyAI : MonoBehaviour
 
         walkPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
 
-        if (NavMesh.SamplePosition(walkPoint, out hit, 1f, NavMesh.AllAreas))
+        if (NavMesh.SamplePosition(walkPoint, out hit, 1f, 1))
         {
             walkPointSet = true;
         }
-        
+
     }
 
     private void ChasePlayer()
@@ -130,6 +130,7 @@ public class EnemyAI : MonoBehaviour
         if (player[0].activeSelf && player[1].activeSelf)
         {
             WhoImChasing();
+            
             if ((!playerInAttackRange && !playerInSightRange) || player[whoImChasing].GetComponent<PlayerController>()._isSafe)
             {
                 Patrolling();
